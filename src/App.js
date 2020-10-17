@@ -93,7 +93,7 @@ class App extends Component {
 
 	onButtonSubmit = () => {
 		console.log('click');
-		app.models.predict('e3bb62daba80458aa1822d7d7f03ef88', 'https://samples.clarifai.com/face-det.jpg').then(
+		app.models.predict(Clarifai.FACE_DETECT_MODEL, 'https://samples.clarifai.com/face-det.jpg').then(
 			function(response) {
 				console.log(response);
 			},
