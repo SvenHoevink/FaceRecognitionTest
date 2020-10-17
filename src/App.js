@@ -5,6 +5,7 @@ import Logo from './Components/Logo/Logo';
 import ImageLinkForm from './Components/ImageLinkForm/ImageLinkForm';
 import Rank from './Components/Rank/Rank';
 import Particles from 'react-particles-js';
+import Clarifai from 'clarifai';
 
 const particleOptions = {
 	particles: {
@@ -78,6 +79,10 @@ const particleOptions = {
 	retina_detect: true
 };
 
+const app = new Clarifai.App({
+	apiKey: 'e3bb62daba80458aa1822d7d7f03ef88'
+});
+
 class App extends Component {
 	constructor() {
 		super();
@@ -85,6 +90,18 @@ class App extends Component {
 			input: ''
 		};
 	}
+
+	onButtonSubmit = () => {
+		console.log('click');
+		app.models.predict('e3bb62daba80458aa1822d7d7f03ef88', 'https://samples.clarifai.com/face-det.jpg').then(
+			function(response) {
+				console.log(response);
+			},
+			function(error) {
+				//there was an error
+			}
+		);
+	};
 
 	onInputChange = (event) => {
 		console.log(event.target.value);
@@ -97,7 +114,7 @@ class App extends Component {
 				<Navigation />
 				<Logo />
 				<Rank />
-				<ImageLinkForm inputChange={this.onInputChange} />
+				<ImageLinkForm onButtonSubmit={this.onButtonSubmit} inputChange={this.onInputChange} />
 				{/* <FaceRecognistion /> */}
 			</div>
 		);
