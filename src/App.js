@@ -7,6 +7,7 @@ import Rank from './Components/Rank/Rank';
 import Particles from 'react-particles-js';
 import Clarifai from 'clarifai';
 import FaceRecognition from './Components/FaceRecognition/FaceRecognition';
+// import Signin from './Components/Signin/Signin';
 
 const particleOptions = {
 	particles: {
@@ -94,7 +95,7 @@ class App extends Component {
 		};
 	}
 
-	calculateFaceLocation = (data) => {
+	calculateFaceLocation = data => {
 		const face = data.outputs[0].data.regions[0].region_info.bounding_box;
 		const image = document.getElementById('inputimage');
 		const width = Number(image.width);
@@ -107,8 +108,7 @@ class App extends Component {
 		};
 	};
 
-	displayFaceBox = (box) => {
-		console.log(box);
+	displayFaceBox = box => {
 		this.setState({ box: box });
 	};
 
@@ -116,11 +116,11 @@ class App extends Component {
 		this.setState({ imageUrl: this.state.input });
 		app.models
 			.predict(Clarifai.FACE_DETECT_MODEL, this.state.input)
-			.then((response) => this.displayFaceBox(this.calculateFaceLocation(response)))
-			.catch((error) => console.log(error));
+			.then(response => this.displayFaceBox(this.calculateFaceLocation(response)))
+			.catch(error => console.log(error));
 	};
 
-	onInputChange = (event) => {
+	onInputChange = event => {
 		this.setState({ input: event.target.value });
 	};
 
@@ -129,6 +129,7 @@ class App extends Component {
 			<div className="App">
 				<Particles params={particleOptions} className="particles" />
 				<Navigation />
+				{/* <Signin /> */}
 				<Logo />
 				<Rank />
 				<ImageLinkForm onButtonSubmit={this.onButtonSubmit} inputChange={this.onInputChange} />
